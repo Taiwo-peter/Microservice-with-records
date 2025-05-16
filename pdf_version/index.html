@@ -231,7 +231,7 @@
     <section id="architecture">
         <h2>2. Microservice Architecture</h2>
         
-        <img src="../static_site/images/architecture-diagram.png" alt="Microservice Architecture with RabbitMQ">
+        <img src="images/architecture-diagram.png" alt="Microservice Architecture with RabbitMQ">
         <div class="caption">Figure 1: Comprehensive architecture diagram showing the flow between components</div>
         
         <h3>2.1 System Components</h3>
@@ -333,7 +333,7 @@
             </tbody>
         </table>
         
-        <img src="../static_site/images/namecheap-dns.png" alt="Namecheap DNS Configuration">
+        <img src="images/namecheap-dns.png" alt="Namecheap DNS Configuration">
         <div class="caption">Figure 2: Namecheap DNS configuration panel showing the required A records</div>
     </section>
     
@@ -372,7 +372,7 @@ rabbitmqadmin declare binding source=microservices destination=insert_record rou
 rabbitmqadmin declare binding source=microservices destination=read_database routing_key=database.read
 rabbitmqadmin declare binding source=microservices destination=send_database routing_key=database.send</pre>
         
-        <img src="../static_site/images/rabbitmq-queues.png" alt="RabbitMQ Queues">
+        <img src="images/rabbitmq-queues.png" alt="RabbitMQ Queues">
         <div class="caption">Figure 3: RabbitMQ Management Interface showing configured queues</div>
     </section>
     
@@ -435,7 +435,7 @@ jobs:
             <p>The workflow is triggered automatically on every push to the main branch.</p>
         </div>
         
-        <img src="../static_site/images/github-workflow.png" alt="GitHub Actions Workflow">
+        <img src="images/github-workflow.png" alt="GitHub Actions Workflow">
         <div class="caption">Figure 4: GitHub Actions workflow execution</div>
     </section>
     
@@ -455,7 +455,7 @@ jobs:
             <li>Set up AWS ECR access for container images</li>
         </ol>
         
-        <img src="../static_site/images/ec2-instances.png" alt="AWS EC2 Instances">
+        <img src="images/ec2-instances.png" alt="AWS EC2 Instances">
         <div class="caption">Figure 5: AWS EC2 Management Console showing running instances</div>
         
         <h4>6.3 Docker Compose Configuration:</h4>
@@ -558,7 +558,7 @@ volumes:
             <p>The web interface is accessible at <a href="http://taiwofaladeprojects.xyz">http://taiwofaladeprojects.xyz</a></p>
         </div>
         
-        <img src="../static_site/images/application-interface.png" alt="Application Interface">
+        <img src="images/application-interface.png" alt="Application Interface">
         <div class="caption">Figure 6: Web interface showing the microservice dashboard</div>
     </section>
 </body>
