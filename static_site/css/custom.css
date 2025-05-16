@@ -138,3 +138,60 @@ footer {
     padding: 3rem 0;
     background-color: var(--bs-dark);
 }
+
+/* Code toggle for mobile */
+.code-toggle {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/* Active navigation link */
+.nav-link.active {
+    font-weight: bold;
+    color: var(--bs-primary) !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .page-header {
+        padding: 3rem 0;
+    }
+    
+    h1, .h1 {
+        font-size: 2rem;
+    }
+    
+    h2, .h2 {
+        font-size: 1.75rem;
+    }
+    
+    section {
+        padding: 2rem 0;
+    }
+}
+
+/* GitHub Pages specific adjustments */
+.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+}
+
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0);
+    }
+    20%, 60% {
+        transform: rotate(-25deg);
+    }
+    40%, 80% {
+        transform: rotate(10deg);
+    }
+}
+
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none;
+    }
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out;
+    }
+}
