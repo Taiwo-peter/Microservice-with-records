@@ -69,6 +69,23 @@
 
     <!-- Main content -->
     <main>
+        <!-- Architecture Diagram section -->
+        <section id="diagram" class="bg-dark pt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto text-center">
+                        <h2 class="text-center mb-4">Microservice Architecture Diagram</h2>
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <img src="/images/architecture-diagram.png" alt="Microservice Architecture with RabbitMQ" class="img-fluid screenshot-img mb-3" style="width: 100%; max-width: 900px;">
+                                <p class="image-caption">Comprehensive architecture diagram showing the flow between components</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Overview section -->
         <section id="overview" class="bg-dark">
             <div class="container">
@@ -197,10 +214,17 @@
                                 </div>
 
                                 <h4 class="mt-4">Communication Flow</h4>
-                                <div class="text-center mt-3 mb-3">
-                                    <img src="{{ url_for('static', filename='images/microservice-architecture.png') }}" alt="Microservice Architecture with RabbitMQ" class="img-fluid screenshot-img">
-                                    <div class="image-caption">Complete architecture diagram showing the flow from development to production</div>
-                                </div>
+                                <pre><code class="language-plaintext">┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│  Web UI      │    │  RabbitMQ    │    │ Microservices │
+│  Interface   │◄───┤  Message     │◄───┤  Containers   │
+│              │    │  Queues      │    │              │
+└─────────────┘    └─────────────┘    └─────────────┘
+                                           │
+                                           ▼
+                                      ┌─────────────┐
+                                      │  Database   │
+                                      │  Storage    │
+                                      └─────────────┘</code></pre>
                             </div>
                         </div>
                     </div>
