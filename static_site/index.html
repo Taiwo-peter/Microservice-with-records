@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microservice Communication with RabbitMQ</title>
+    
+    <!-- Bootstrap CSS (Replit-themed) -->
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- PrismJS for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/themes/prism-tomorrow.min.css">
+    
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-rabbit"></i> RabbitMQ Microservices
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#overview">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#architecture">Architecture</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#domain-setup">Domain Setup</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#rabbitmq-setup">RabbitMQ Setup</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cicd-pipeline">CI/CD Pipeline</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#aws-deployment">AWS Deployment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#application">Application</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header section -->
+    <header class="page-header">
+        <div class="container text-center">
+            <h1 class="display-4">Building Microservice Communication with RabbitMQ</h1>
+            <p class="lead">A step-by-step guide to creating, deploying, and managing microservices with RabbitMQ, AWS, and GitHub Actions</p>
+            <div class="mt-4">
+                <a href="#overview" class="btn btn-light btn-lg">Get Started</a>
+                <a href="#architecture" class="btn btn-outline-light btn-lg">View Architecture</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main>
+        <!-- Architecture Diagram section -->
+        <section id="diagram" class="bg-dark pt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto text-center">
+                        <h2 class="text-center mb-4">Microservice Architecture Diagram</h2>
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <img src="images/architecture-diagram.png" alt="Microservice Architecture with RabbitMQ" class="img-fluid screenshot-img mb-3" style="width: 100%; max-width: 900px;">
+                                <p class="image-caption">Comprehensive architecture diagram showing the flow between components</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Overview section -->
+        <section id="overview" class="bg-dark">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <h2 class="text-center mb-4">Project Overview</h2>
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <p class="lead">This tutorial walks through the complete process of building a microservice architecture using RabbitMQ for message queuing. We'll cover:</p>
+                                <div class="timeline">
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <h5><i class="fas fa-sitemap me-2"></i> Designing the Microservice Architecture</h5>
+                                        <p>Structuring multiple services to handle different business functions</p>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <h5><i class="fas fa-network-wired me-2"></i> Setting up Domain & DNS</h5>
+                                        <p>Configuring Namecheap domain settings for our deployment</p>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <h5><i class="fas fa-rabbit me-2"></i> Configuring RabbitMQ</h5>
+                                        <p>Setting up message queues for service communication</p>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <h5><i class="fab fa-github me-2"></i> Implementing CI/CD with GitHub Actions</h5>
+                                        <p>Creating automated build and deployment workflows</p>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <h5><i class="fab fa-aws me-2"></i> Deploying to AWS EC2</h5>
+                                        <p>Setting up infrastructure and deploying our services</p>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <h5><i class="fas fa-desktop me-2"></i> Building the Web Interface</h5>
+                                        <p>Creating a simple frontend to interact with our microservices</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture section -->
+        <section id="architecture" class="bg-body-tertiary">
+            <div class="container">
+                <h2 class="text-center mb-5">Microservice Architecture</h2>
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <h3 class="card-title">System Components</h3>
+                                <p>Our microservice architecture consists of several interconnected components:</p>
+                                
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <div class="text-center">
+                                                    <i class="fas fa-server service-icon"></i>
+                                                    <h4>Microservices</h4>
+                                                </div>
+                                                <ul>
+                                                    <li><strong>Health Check Service</strong>: Monitors system health</li>
+                                                    <li><strong>Insert Record Service</strong>: Handles data insertion</li>
+                                                    <li><strong>Read Database Service</strong>: Retrieves data</li>
+                                                    <li><strong>Delete Record Service</strong>: Manages data deletion</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <div class="text-center">
+                                                    <i class="fas fa-rabbit service-icon"></i>
+                                                    <h4>RabbitMQ Queues</h4>
+                                                </div>
+                                                <ul>
+                                                    <li><strong>health_check</strong>: System health monitoring</li>
+                                                    <li><strong>insert_record</strong>: Database insertion queue</li>
+                                                    <li><strong>read_database</strong>: Data retrieval queue</li>
+                                                    <li><strong>send_database</strong>: Data transmission queue</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <div class="text-center">
+                                                    <i class="fab fa-aws service-icon"></i>
+                                                    <h4>AWS Infrastructure</h4>
+                                                </div>
+                                                <ul>
+                                                    <li><strong>EC2 Instances</strong>: Host our services</li>
+                                                    <li><strong>EBS Volumes</strong>: For persistent storage</li>
+                                                    <li><strong>ECR</strong>: Container registry for images</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <div class="text-center">
+                                                    <i class="fab fa-github service-icon"></i>
+                                                    <h4>CI/CD Pipeline</h4>
+                                                </div>
+                                                <ul>
+                                                    <li><strong>GitHub Actions</strong>: Automated builds</li>
+                                                    <li><strong>Docker</strong>: Containerization</li>
+                                                    <li><strong>ECR Integration</strong>: Image deployment</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h4 class="mt-4">Communication Flow</h4>
+                                <pre><code class="language-plaintext">┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│  Web UI      │    │  RabbitMQ    │    │ Microservices │
+│  Interface   │◄───┤  Message     │◄───┤  Containers   │
+│              │    │  Queues      │    │              │
+└─────────────┘    └─────────────┘    └─────────────┘
+                                           │
+                                           ▼
+                                      ┌─────────────┐
+                                      │  Database   │
+                                      │  Storage    │
+                                      └─────────────┘</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Domain setup section -->
+        <section id="domain-setup" class="bg-dark">
+            <div class="container">
+                <h2 class="text-center mb-5">Domain & DNS Configuration</h2>
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <h3 class="card-title">Namecheap DNS Setup</h3>
+                                <p>For our microservice architecture, we need a domain to access our services. We're using Namecheap to manage our domain <code>taiwofaladeprojects.xyz</code>.</p>
+                                
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i> DNS records are essential for routing traffic correctly to our services.
+                                </div>
+                                
+                                <h4 class="mt-4">DNS Configuration Steps:</h4>
+                                <ol>
+                                    <li>Log into your Namecheap account and navigate to the domain management page</li>
+                                    <li>Select "Advanced DNS" to configure the required DNS records</li>
+                                    <li>Configure A Records to point to your AWS EC2 instance IP (18.175.233.83)</li>
+                                </ol>
+                                
+                                <h5 class="mt-3">Key DNS Records:</h5>
+                                <div class="table-container">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Host</th>
+                                                <th>Value</th>
+                                                <th>TTL</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>A Record</td>
+                                                <td>@</td>
+                                                <td>18.175.233.83</td>
+                                                <td>Automatic</td>
+                                            </tr>
+                                            <tr>
+                                                <td>A Record</td>
+                                                <td>www</td>
+                                                <td>18.175.233.83</td>
+                                                <td>Automatic</td>
+                                            </tr>
+                                            <tr>
+                                                <td>A Record</td>
+                                                <td>rabbitmq</td>
+                                                <td>18.175.233.83</td>
+                                                <td>Automatic</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="images/namecheap-dns.png" alt="Namecheap DNS Configuration" class="img-fluid screenshot-img">
+                        <p class="image-caption">Namecheap DNS configuration panel showing the required A records</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RabbitMQ section -->
+        <section id="rabbitmq-setup" class="bg-body-tertiary">
+            <div class="container">
+                <h2 class="text-center mb-5">RabbitMQ Configuration</h2>
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <h3 class="card-title">Setting Up RabbitMQ</h3>
+                                <p>RabbitMQ is the heart of our microservice architecture, facilitating communication between services.</p>
+                                
+                                <h4 class="mt-4">Installation Steps:</h4>
+                                <ol>
+                                    <li>Install RabbitMQ on your EC2 instance</li>
+                                    <li>Enable the management plugin for UI access</li>
+                                    <li>Configure users and permissions</li>
+                                    <li>Set up virtual hosts for isolating environments</li>
+                                </ol>
+                                
+                                <div class="alert alert-success mt-4">
+                                    <i class="fas fa-check-circle me-2"></i> RabbitMQ Management UI is accessible at <a href="http://rabbitmq.taiwofaladeprojects.xyz" class="alert-link">http://rabbitmq.taiwofaladeprojects.xyz</a>
+                                </div>
+                                
+                                <h4 class="mt-4">Queue Configuration:</h4>
+                                <pre><code class="language-bash"># Create required queues
+rabbitmqadmin declare queue name=health_check durable=true
+rabbitmqadmin declare queue name=insert_record durable=true
+rabbitmqadmin declare queue name=read_database durable=true
+rabbitmqadmin declare queue name=send_database durable=true
+
+# Set up exchanges and bindings
+rabbitmqadmin declare exchange name=microservices type=topic
+rabbitmqadmin declare binding source=microservices destination=health_check routing_key=service.health
+rabbitmqadmin declare binding source=microservices destination=insert_record routing_key=database.insert
+rabbitmqadmin declare binding source=microservices destination=read_database routing_key=database.read
+rabbitmqadmin declare binding source=microservices destination=send_database routing_key=database.send</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-lg-12">
+                                <img src="images/rabbitmq-queues.png" alt="RabbitMQ Queues" class="img-fluid screenshot-img">
+                                <p class="image-caption">RabbitMQ Management Interface showing configured queues</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GitHub Actions CI/CD section -->
+        <section id="cicd-pipeline" class="bg-dark">
+            <div class="container">
+                <h2 class="text-center mb-5">CI/CD Pipeline with GitHub Actions</h2>
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <img src="images/github-workflow.png" alt="GitHub Actions Workflow" class="img-fluid screenshot-img">
+                        <p class="image-caption">GitHub Actions workflow execution</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <h3 class="card-title">Automated Deployment Pipeline</h3>
+                                <p>We use GitHub Actions to automate the build and deployment process for our microservices.</p>
+                                
+                                <h4 class="mt-4">Workflow Configuration:</h4>
+                                <pre><code class="language-yaml">name: Deploy Microservices
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+      
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: microservices-app
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+      
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
+            docker pull ${{ steps.login-ecr.outputs.registry }}/microservices-app:${{ github.sha }}
+            docker-compose down
+            echo "IMAGE_TAG=${{ github.sha }}" > .env
+            docker-compose up -d</code></pre>
+                                
+                                <div class="alert alert-info mt-4">
+                                    <i class="fas fa-info-circle me-2"></i> The workflow is triggered automatically on every push to the main branch.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AWS Deployment section -->
+        <section id="aws-deployment" class="bg-body-tertiary">
+            <div class="container">
+                <h2 class="text-center mb-5">AWS Deployment</h2>
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <h3 class="card-title">EC2 Instance Configuration</h3>
+                                <p>Our microservices are deployed on AWS EC2 instances, providing scalable and reliable infrastructure.</p>
+                                
+                                <h4 class="mt-4">EC2 Setup Steps:</h4>
+                                <ol>
+                                    <li>Launch an EC2 instance (t2.micro) with Amazon Linux 2</li>
+                                    <li>Configure security groups to allow necessary traffic (HTTP, HTTPS, SSH, RabbitMQ)</li>
+                                    <li>Install Docker and Docker Compose</li>
+                                    <li>Set up AWS ECR access for container images</li>
+                                </ol>
+                                
+                                <div class="row mt-4">
+                                    <div class="col-lg-12">
+                                        <img src="images/ec2-instances.png" alt="AWS EC2 Instances" class="img-fluid screenshot-img">
+                                        <p class="image-caption">AWS EC2 Management Console showing running instances</p>
+                                    </div>
+                                </div>
+                                
+                                <h4 class="mt-4">Docker Compose Configuration:</h4>
+                                <pre><code class="language-yaml">version: '3'
+
+services:
+  health-check-service:
+    image: ${ECR_REGISTRY}/microservices-app:${IMAGE_TAG}
+    command: python services/health_check_service.py
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASS=${RABBITMQ_PASS}
+    restart: always
+    depends_on:
+      - rabbitmq
+
+  insert-record-service:
+    image: ${ECR_REGISTRY}/microservices-app:${IMAGE_TAG}
+    command: python services/insert_record_service.py
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASS=${RABBITMQ_PASS}
+      - DB_CONNECTION=${DB_CONNECTION}
+    restart: always
+    depends_on:
+      - rabbitmq
+
+  read-database-service:
+    image: ${ECR_REGISTRY}/microservices-app:${IMAGE_TAG}
+    command: python services/read_database_service.py
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASS=${RABBITMQ_PASS}
+      - DB_CONNECTION=${DB_CONNECTION}
+    restart: always
+    depends_on:
+      - rabbitmq
+
+  delete-record-service:
+    image: ${ECR_REGISTRY}/microservices-app:${IMAGE_TAG}
+    command: python services/delete_record_service.py
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASS=${RABBITMQ_PASS}
+      - DB_CONNECTION=${DB_CONNECTION}
+    restart: always
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  web-interface:
+    image: ${ECR_REGISTRY}/microservices-app:${IMAGE_TAG}
+    command: python app.py
+    ports:
+      - "80:5000"
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASS=${RABBITMQ_PASS}
+    restart: always
+    depends_on:
+      - rabbitmq
+
+volumes:
+  rabbitmq_data:</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Application Interface section -->
+        <section id="application" class="bg-dark">
+            <div class="container">
+                <h2 class="text-center mb-5">Application Interface</h2>
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <h3 class="card-title">Web UI</h3>
+                                <p>The web interface allows users to interact with our microservices, providing a visual representation of the system's capabilities.</p>
+                                
+                                <h4 class="mt-4">Features:</h4>
+                                <ul>
+                                    <li>Health Check: Monitor the status of all services</li>
+                                    <li>Data Management: Insert, read, and delete records</li>
+                                    <li>Queue Metrics: View RabbitMQ queue statistics</li>
+                                    <li>Service Logs: Access logs for troubleshooting</li>
+                                </ul>
+                                
+                                <div class="alert alert-success mt-4">
+                                    <i class="fas fa-check-circle me-2"></i> The web interface is accessible at <a href="http://taiwofaladeprojects.xyz" class="alert-link">http://taiwofaladeprojects.xyz</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="images/application-interface.png" alt="Application Interface" class="img-fluid screenshot-img">
+                        <p class="image-caption">Web interface showing the microservice dashboard</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>RabbitMQ Microservices Tutorial</h5>
+                    <p>A comprehensive guide to building, deploying, and managing microservices with RabbitMQ, AWS, and GitHub Actions.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#overview">Overview</a></li>
+                        <li><a href="#architecture">Architecture</a></li>
+                        <li><a href="#domain-setup">Domain Setup</a></li>
+                        <li><a href="#rabbitmq-setup">RabbitMQ Setup</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Resources</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="https://www.rabbitmq.com/documentation.html" target="_blank">RabbitMQ Docs</a></li>
+                        <li><a href="https://docs.aws.amazon.com/ec2/" target="_blank">AWS EC2 Docs</a></li>
+                        <li><a href="https://docs.github.com/en/actions" target="_blank">GitHub Actions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p>&copy; 2025 RabbitMQ Microservices Tutorial</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- PrismJS for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/components/prism-yaml.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>
