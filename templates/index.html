@@ -197,17 +197,10 @@
                                 </div>
 
                                 <h4 class="mt-4">Communication Flow</h4>
-                                <pre><code class="language-plaintext">┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│  Web UI      │    │  RabbitMQ    │    │ Microservices │
-│  Interface   │◄───┤  Message     │◄───┤  Containers   │
-│              │    │  Queues      │    │              │
-└─────────────┘    └─────────────┘    └─────────────┘
-                                           │
-                                           ▼
-                                      ┌─────────────┐
-                                      │  Database   │
-                                      │  Storage    │
-                                      └─────────────┘</code></pre>
+                                <div class="text-center mt-3 mb-3">
+                                    <img src="{{ url_for('static', filename='images/microservice-architecture.png') }}" alt="Microservice Architecture with RabbitMQ" class="img-fluid screenshot-img">
+                                    <div class="image-caption">Complete architecture diagram showing the flow from development to production</div>
+                                </div>
                             </div>
                         </div>
                     </div>
