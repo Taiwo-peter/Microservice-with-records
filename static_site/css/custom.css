@@ -1,0 +1,140 @@
+/* Custom styles beyond Bootstrap */
+
+/* Section padding */
+section {
+    padding: 4rem 0;
+}
+
+/* Code block styling */
+pre[class*="language-"] {
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
+}
+
+/* Screenshot images */
+.screenshot-img {
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    max-width: 100%;
+    height: auto;
+    margin: 1.5rem 0;
+}
+
+/* Step numbers */
+.step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: var(--bs-primary);
+    color: white;
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+/* Timeline */
+.timeline {
+    position: relative;
+    padding-left: 3rem;
+}
+
+.timeline:before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background-color: var(--bs-border-color);
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 2rem;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -2.25rem;
+    top: 0.25rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: var(--bs-primary);
+}
+
+/* Header background */
+.page-header {
+    background: linear-gradient(135deg, #4a148c 0%, #7b1fa2 100%);
+    color: white;
+    padding: 5rem 0;
+}
+
+/* Navbar adjustments */
+.navbar {
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+/* Tables */
+.table-container {
+    overflow-x: auto;
+}
+
+/* Image captions */
+.image-caption {
+    text-align: center;
+    font-style: italic;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Table of contents */
+.toc {
+    position: sticky;
+    top: 5rem;
+}
+
+/* Fixed navbar padding adjustment */
+body {
+    padding-top: 4rem;
+}
+
+/* Override code background for dark mode */
+code[class*="language-"], 
+pre[class*="language-"] {
+    background: #2d2d2d !important;
+}
+
+/* Dashboard card */
+.dashboard-card {
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-0.25rem);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Button spacing */
+.btn {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Service icons */
+.service-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--bs-primary);
+}
+
+/* Footer styling */
+footer {
+    padding: 3rem 0;
+    background-color: var(--bs-dark);
+}
